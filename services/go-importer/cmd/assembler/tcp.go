@@ -27,7 +27,7 @@ var quiet = true
 
 const closeTimeout time.Duration = time.Hour * 24 // Closing inactive: TODO: from CLI
 const timeout time.Duration = time.Minute * 5     // Pending bytes: TODO: from CLI
-const streamdoc_limit int = 6_000_000 - 0x1000    // 16 MB (6 + (4/3)*6) - some overhead
+const streamdoc_limit int = 30_000_000            // pattented big mongo technology
 
 /*
  * The TCP factory: returns a new Stream
@@ -37,7 +37,7 @@ type TcpStreamFactory struct {
 }
 
 func (factory *TcpStreamFactory) New(net, transport gopacket.Flow, tcp *layers.TCP, ac reassembly.AssemblerContext) reassembly.Stream {
-	source := ac.GetCaptureInfo().AncillaryData[0].(string);
+	source := ac.GetCaptureInfo().AncillaryData[0].(string)
 	fsmOptions := reassembly.TCPSimpleFSMOptions{
 		SupportMissingEstablishment: *nonstrict,
 	}
@@ -204,7 +204,7 @@ func (t *TcpStream) ReassemblyComplete(ac reassembly.AssemblerContext) bool {
 		Parent_id:   primitive.NilObjectID,
 		Child_id:    primitive.NilObjectID,
 		Blocked:     false,
-		Tags:        []string { "tcp" },
+		Tags:        []string{"tcp"},
 		Suricata:    make([]int, 0),
 		Filename:    t.source,
 		Flow:        t.FlowItems,
