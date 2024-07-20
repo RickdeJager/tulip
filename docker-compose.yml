@@ -1,7 +1,7 @@
 version: "3.2"
 services:
   mongo:
-    image: mongo:5
+    image: molenzwiebel/big-mongo:latest
     networks:
       - internal
     restart: always
